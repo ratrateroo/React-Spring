@@ -50,6 +50,7 @@ public class Flight {
 	public Timestamp getEstimatedDepartureTime() {
 		return estimatedDepartureTime;
 	}
+
 	public void setEstimatedDepartureTime(Timestamp estimatedDepartureTime) {
 		this.estimatedDepartureTime = estimatedDepartureTime;
 	}
