@@ -1,6 +1,7 @@
 package com.flightservices.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Reservation extends AbstractEntity {
@@ -8,7 +9,10 @@ public class Reservation extends AbstractEntity {
 	 
 	private Boolean checkedIn;
 	private int numberOfBags;
-
+	@OneToOne
+	private Flight flight;
+	@OneToOne
+	private Passenger passenger;
 	 
 
 	public Boolean getCheckedIn() {
@@ -25,5 +29,21 @@ public class Reservation extends AbstractEntity {
 
 	public void setNumberOfBags(int numberOfBags) {
 		this.numberOfBags = numberOfBags;
+	}
+
+	public Flight getFlight() {
+		return flight;
+	}
+
+	public void setFlight(Flight flight) {
+		this.flight = flight;
+	}
+
+	public Passenger getPassenger() {
+		return passenger;
+	}
+
+	public void setPassenger(Passenger passenger) {
+		this.passenger = passenger;
 	}
 }
