@@ -3,19 +3,13 @@ package com.flightservices.entities;
 import javax.persistence.Entity;
 
 @Entity
-public class Reservation {
+public class Reservation extends AbstractEntity {
 
-	private int id;
+	 
 	private Boolean checkedIn;
 	private int numberOfBags;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	 
 
 	public Boolean getCheckedIn() {
 		return checkedIn;

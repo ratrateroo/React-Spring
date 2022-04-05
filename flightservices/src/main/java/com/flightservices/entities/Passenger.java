@@ -3,22 +3,16 @@ package com.flightservices.entities;
 import javax.persistence.Entity;
 
 @Entity
-public class Passenger {
+public class Passenger extends AbstractEntity{
 
-	private int id;
+	 
 	private String firstName;
 	private String lastName;
 	private String middleName;
 	private String email;
 	private String phone;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	 
 
 	public String getFirstName() {
 		return firstName;
