@@ -3,6 +3,10 @@ package com.flightservices.entities;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import javax.persistence.Entity;
+
+
+@Entity
 public class Flight {
 	private int id;
 	private String flightNumber;
