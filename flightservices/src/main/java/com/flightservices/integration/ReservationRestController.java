@@ -9,22 +9,48 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.flightservices.dto.CreateReservationRequest;
 import com.flightservices.entities.Flight;
+import com.flightservices.entities.Passenger;
 import com.flightservices.entities.Reservation;
 import com.flightservices.repositories.FlightRepository;
+import com.flightservices.repositories.PassengerRepository;
+import com.flightservices.repositories.ReservationRepository;
 
 @RestController
 public class ReservationRestController {
 	@Autowired
 	FlightRepository flightRepository;
 	
-	@RequestMapping(value="/flights",method=RequestMethod.GET)
+	@Autowired
+	PassengerRepository passengerRepository;
+	
+	@Autowired
+	ReservationRepository reservationRepository;
+
+	@RequestMapping(value = "/flights", method = RequestMethod.GET)
 	public List<Flight> findFlights() {
 		return flightRepository.findAll();
-		
+
 	}
-	@RequestMapping(value="/reservations",method=RequestMethod.POST)
+
+	@RequestMapping(value = "/reservations", method = RequestMethod.POST)
 	public Reservation saveReservation(CreateReservationRequest request) {
-		return null;
+		Flight flight = flightRepository.findById(request.getFlightId()).get();
+
+		Passenger passenger = new Passenger();
+		passenger.setFirstName(request.getPassengerFirstName());
+		passenger.setLastName(request.getPassengerLastName());
+		passenger.setMiddleName(request.getPassengerMiddleName());
+		passenger.setEmail(request.getPassengerEmail());
+		passenger.setPhone(request.getPassengerPhone());
 		
+		Passenger savedPassenger = passengerRepository.save(passenger);
+		
+		Reservation reservation = new Reservation();
+		reservation.setFlight(flight);
+		reservation.setPassenger(savedPassenger);
+		reservation.setCheckedIn(false);
+		
+		return reservationRepository.save(reservation);
+
 	}
 }
