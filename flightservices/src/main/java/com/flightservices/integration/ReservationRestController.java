@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flightservices.dto.CreateReservationRequest;
+import com.flightservices.dto.UpdateReservationRequest;
 import com.flightservices.entities.Flight;
 import com.flightservices.entities.Passenger;
 import com.flightservices.entities.Reservation;
@@ -21,10 +22,10 @@ import com.flightservices.repositories.ReservationRepository;
 public class ReservationRestController {
 	@Autowired
 	FlightRepository flightRepository;
-	
+
 	@Autowired
 	PassengerRepository passengerRepository;
-	
+
 	@Autowired
 	ReservationRepository reservationRepository;
 
@@ -45,21 +46,30 @@ public class ReservationRestController {
 		passenger.setMiddleName(request.getPassengerMiddleName());
 		passenger.setEmail(request.getPassengerEmail());
 		passenger.setPhone(request.getPassengerPhone());
-		
+
 		Passenger savedPassenger = passengerRepository.save(passenger);
-		
+
 		Reservation reservation = new Reservation();
 		reservation.setFlight(flight);
 		reservation.setPassenger(savedPassenger);
 		reservation.setCheckedIn(false);
-		
+
 		return reservationRepository.save(reservation);
 
 	}
-	
-	@RequestMapping(value="/reservation/{id}")
+
+	@RequestMapping(value = "/reservation/{id}")
 	public Reservation findReservation(@PathVariable("id") int id) {
 		return reservationRepository.findById(id).get();
+
 	}
+
+	@RequestMapping(value = "/reservations", method = RequestMethod.PUT)
+	public Reservation updateReservation(UpdateReservationRequest request) {
+
+		Reservation reservation = reservationRepository.findById(request.getId()).get();
+		reservation.setNumberOfBags(request.getNumberOfBags());
+		reservation.setCheckedIn(request.isCheckIn());
+		return reservationRepository.save(reservation);
 	}
 }
